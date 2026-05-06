@@ -1,0 +1,870 @@
+/* ═══════════════════════════════════════════════════════════
+   FOR NAOMI — Dark Cinematic Editorial
+   7 chapters · vanilla CSS · no build tools
+═══════════════════════════════════════════════════════════ */
+
+/* ── Design tokens ── */
+:root {
+  --bg:         #0c0a0e;
+  --surface:    #151018;
+  --gold:       #c8a96e;
+  --gold-light: #e8cfa0;
+  --gold-dim:   rgba(200, 169, 110, 0.18);
+  --rose:       #9e3d5a;
+  --blush:      #e8b4c0;
+  --cream:      #f2ece4;
+  --dim:        rgba(242, 236, 228, 0.50);
+  --dimmer:     rgba(242, 236, 228, 0.30);
+
+  --font-title:  'Cormorant Garamond', Georgia, serif;
+  --font-body:   'DM Sans', sans-serif;
+  --font-script: 'Pinyon Script', cursive;
+
+  --grain-url: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.38'/%3E%3C/svg%3E");
+}
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  background: var(--bg);
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-weight: 300;
+  overflow-x: hidden;
+  cursor: none;
+}
+img { display: block; max-width: 100%; }
+button { background: none; border: none; cursor: pointer; }
+
+/* ── Film grain overlay (global) ── */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 999;
+  background-image: var(--grain-url);
+  background-size: 200px 200px;
+  mix-blend-mode: overlay;
+  opacity: 0.25;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CUSTOM CURSOR
+═══════════════════════════════════════════════════════════ */
+.cursor {
+  position: fixed;
+  width: 28px;
+  height: 28px;
+  border: 1.5px solid var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1000;
+  transform: translate(-50%, -50%);
+  transition: transform 0.12s ease, width 0.2s ease, height 0.2s ease, opacity 0.2s ease, border-color 0.2s ease;
+  mix-blend-mode: screen;
+}
+
+.cursor-dot {
+  position: fixed;
+  width: 5px;
+  height: 5px;
+  background: var(--gold);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 1001;
+  transform: translate(-50%, -50%);
+  transition: none;
+}
+
+body:has(a:hover) .cursor,
+body:has(button:hover) .cursor,
+body:has(.magnetic:hover) .cursor {
+  width: 50px;
+  height: 50px;
+  border-color: var(--gold-light);
+}
+
+@media (hover: none) {
+  .cursor, .cursor-dot { display: none; }
+  body { cursor: auto; }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CHAPTER NAV DOTS
+═══════════════════════════════════════════════════════════ */
+.chapter-nav {
+  position: fixed;
+  left: 1.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.chapter-nav.visible { opacity: 1; }
+
+.chapter-nav__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(200, 169, 110, 0.3);
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.chapter-nav__dot.active {
+  background: var(--gold);
+  transform: scale(1.5);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SCROLL REVEAL
+═══════════════════════════════════════════════════════════ */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+[data-reveal].revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CHAPTER — shared
+═══════════════════════════════════════════════════════════ */
+.chapter {
+  position: relative;
+  min-height: 100vh;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CHAPTER 1 — HERO
+═══════════════════════════════════════════════════════════ */
+.chapter--hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+}
+
+.hero__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: brightness(0.55) saturate(0.7);
+  transform: scale(1.04);
+  transition: transform 8s ease;
+}
+
+.chapter--hero.in-view .hero__photo { transform: scale(1); }
+
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(12, 10, 14, 0.5) 0%,
+    rgba(12, 10, 14, 0.25) 40%,
+    rgba(12, 10, 14, 0.6) 100%
+  );
+}
+
+.hero__particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+}
+
+.hero__eyebrow {
+  font-family: var(--font-script);
+  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  color: var(--gold);
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+  opacity: 0;
+  animation: heroFadeUp 1.2s ease forwards 0.6s;
+}
+
+.hero__name {
+  font-family: var(--font-title);
+  font-size: clamp(6rem, 18vw, 16rem);
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  text-shadow: 0 4px 60px rgba(0,0,0,0.6);
+  opacity: 0;
+  animation: heroFadeUp 1.4s ease forwards 0.9s;
+}
+
+.hero__sub {
+  font-family: var(--font-body);
+  font-size: clamp(0.75rem, 1.5vw, 0.9rem);
+  color: var(--dim);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin-top: 1.2rem;
+  opacity: 0;
+  animation: heroFadeUp 1.2s ease forwards 1.3s;
+}
+
+.hero__scroll {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  opacity: 0;
+  animation: heroFadeUp 1s ease forwards 2s;
+}
+
+.hero__scroll-line {
+  display: block;
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, transparent, var(--gold), transparent);
+  margin: 0 auto;
+  animation: scrollPulse 2.4s ease-in-out infinite 2.2s;
+}
+
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scrollPulse {
+  0%, 100% { transform: scaleY(1); opacity: 1; }
+  50%       { transform: scaleY(0.6); opacity: 0.4; }
+}
+
+/* Gold particles */
+.particle {
+  position: absolute;
+  bottom: -5%;
+  pointer-events: none;
+  opacity: 0;
+  color: var(--gold);
+  font-size: 0.7rem;
+  animation: particleFloat linear infinite;
+}
+
+@keyframes particleFloat {
+  0%   { opacity: 0; transform: translateY(0) translateX(0); }
+  8%   { opacity: 0.65; }
+  90%  { opacity: 0.2; }
+  100% { opacity: 0; transform: translateY(-110vh) translateX(var(--drift, 0px)); }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CHAPTER 2 — EDITORIAL "She Walked In"
+═══════════════════════════════════════════════════════════ */
+.chapter--editorial {
+  background: var(--bg);
+  padding: 8rem 4rem 8rem 7rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.editorial__label {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+
+.editorial__title {
+  font-family: var(--font-title);
+  font-size: clamp(3rem, 7vw, 7rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--cream);
+  line-height: 1;
+  margin-bottom: 3.5rem;
+}
+
+.editorial__grid {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1.2rem;
+  max-width: 1100px;
+  height: 72vh;
+}
+
+.editorial__photo {
+  position: relative;
+  overflow: hidden;
+  cursor: none;
+}
+
+.editorial__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: brightness(0.88) saturate(0.8) contrast(1.05);
+  transition: filter 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.editorial__photo:hover img {
+  filter: brightness(0.95) saturate(0.9);
+  transform: scale(1.03);
+}
+
+.editorial__photo--main {
+  grid-row: 1 / 3;
+}
+
+.editorial__photo--top-right {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.editorial__photo--bottom-right {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.editorial__caption {
+  position: absolute;
+  bottom: 0.9rem;
+  left: 1rem;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.editorial__photo:hover .editorial__caption { opacity: 1; }
+
+/* Gold border accent on hover */
+.editorial__photo::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 1px solid transparent;
+  transition: border-color 0.4s ease;
+  pointer-events: none;
+}
+.editorial__photo:hover::after { border-color: rgba(200, 169, 110, 0.35); }
+
+/* ═══════════════════════════════════════════════════════════
+   CHAPTER 3 — THROWBACK "She Was Always This Beautiful"
+═══════════════════════════════════════════════════════════ */
+.chapter--throwback {
+  background: var(--surface);
+  padding: 8rem 0 6rem;
+  overflow: hidden;
+}
+
+.throwback__header {
+  padding: 0 4rem 0 7rem;
+  margin-bottom: 3.5rem;
+}
+
+.throwback__label {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+
+.throwback__title {
+  font-family: var(--font-title);
+  font-size: clamp(2.5rem, 5.5vw, 6rem);
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 1.1;
+}
+
+.throwback__title em {
+  font-style: italic;
+  color: var(--gold-light);
+}
+
+.throwback__hint {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  color: var(--dim);
+  letter-spacing: 0.2em;
+  margin-top: 1.2rem;
+}
+
+.throwback__track-wrap {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  cursor: grab;
+}
+
+.throwback__track-wrap:active { cursor: grabbing; }
+.throwback__track-wrap::-webkit-scrollbar { display: none; }
+
+/* Left-edge fade */
+.throwback__track-wrap::before,
+.throwback__track-wrap::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 120px;
+  pointer-events: none;
+  z-index: 2;
+}
+.throwback__track-wrap::before {
+  left: 0;
+  background: linear-gradient(to right, var(--surface), transparent);
+}
+.throwback__track-wrap::after {
+  right: 0;
+  background: linear-gradient(to left, var(--surface), transparent);
+}
+
+.throwback__track {
+  display: flex;
+  gap: 1.5rem;
+  padding: 0.5rem 7rem 2rem 7rem;
+  width: max-content;
+  align-items: flex-start;
+}
+
+.throwback__card {
+  flex: 0 0 auto;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.throwback__frame {
+  width: 100%;
+  height: 420px;
+  overflow: hidden;
+  position: relative;
+}
+
+.throwback__frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  transition: transform 0.5s ease;
+}
+
+.throwback__card:hover .throwback__frame img { transform: scale(1.04); }
+
+/* Vintage filters */
+.throwback__card.vintage .throwback__frame img {
+  filter: sepia(0.65) brightness(0.88) contrast(0.9) saturate(0.6);
+}
+.throwback__card.vintage-soft .throwback__frame img {
+  filter: sepia(0.35) brightness(0.92) contrast(0.92) saturate(0.75);
+}
+.throwback__card.warm .throwback__frame img {
+  filter: sepia(0.18) brightness(0.9) contrast(0.95) saturate(0.85) warmth(1);
+}
+.throwback__card .throwback__frame img {
+  filter: brightness(0.88) saturate(0.85);
+}
+
+.throwback__cap {
+  font-family: var(--font-title);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--dim);
+  text-align: center;
+  padding: 0 0.5rem;
+}
+
+.throwback__cap em { color: var(--gold-light); font-style: italic; }
+
+/* ═══════════════════════════════════════════════════════════
+   CHAPTER 4 — "She Shows Up"
+═══════════════════════════════════════════════════════════ */
+.chapter--people {
+  background: var(--bg);
+  padding: 8rem 4rem 8rem 7rem;
+}
+
+.people__header { margin-bottom: 4rem; }
+
+.people__label {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+
+.people__title {
+  font-family: var(--font-title);
+  font-size: clamp(2.8rem, 6vw, 6.5rem);
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 1;
+}
+
+.people__sub {
+  font-family: var(--font-title);
+  font-size: clamp(1.2rem, 2.5vw, 2rem);
+  font-style: italic;
+  color: var(--gold);
+  margin-top: 0.4rem;
+}
+
+.people__mosaic {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.4rem;
+  max-width: 900px;
+}
+
+.people__item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+  aspect-ratio: 4 / 5;
+  transition: box-shadow 0.4s ease;
+}
+
+.people__item:hover {
+  box-shadow: 0 0 0 1px var(--gold), 0 16px 60px rgba(200, 169, 110, 0.15);
+}
+
+.people__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: brightness(0.82) saturate(0.82) contrast(1.05);
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+}
+
+.people__item:hover img {
+  transform: scale(1.04);
+  filter: brightness(0.88) saturate(0.9);
+}
+
+.people__caption {
+  position: absolute;
+  bottom: 0;
+  left: 0; right: 0;
+  padding: 1.8rem 1.2rem 1rem;
+  font-family: var(--font-title);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--cream);
+  background: linear-gradient(to top, rgba(12,10,14,0.85) 0%, transparent 100%);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.people__item:hover .people__caption {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CHAPTER 5 — "The Look"
+═══════════════════════════════════════════════════════════ */
+.chapter--look {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.look__split {
+  position: absolute;
+  inset: 0;
+  display: flex;
+}
+
+.look__panel {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+
+.look__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: brightness(0.55) saturate(0.7) contrast(1.05);
+  transition: filter 0.5s ease;
+}
+
+.look__panel:hover .look__img {
+  filter: brightness(0.7) saturate(0.85);
+}
+
+.look__vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 40%, rgba(12,10,14,0.5) 100%);
+  pointer-events: none;
+}
+
+.look__divider {
+  width: 1px;
+  background: var(--gold);
+  opacity: 0.5;
+  position: relative;
+  z-index: 2;
+  flex-shrink: 0;
+}
+
+.look__word {
+  position: relative;
+  z-index: 3;
+  font-family: var(--font-title);
+  font-size: clamp(4rem, 12vw, 12rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--cream);
+  text-shadow: 0 4px 80px rgba(0,0,0,0.8);
+  letter-spacing: -0.02em;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.look__label {
+  position: absolute;
+  bottom: 2rem;
+  right: 2.5rem;
+  z-index: 3;
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity: 0.7;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CHAPTER 6 — "A Letter"
+═══════════════════════════════════════════════════════════ */
+.chapter--letter {
+  background: var(--surface);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10rem 4rem;
+}
+
+.letter__inner {
+  max-width: 680px;
+  width: 100%;
+}
+
+.letter__rule {
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+  margin-bottom: 3rem;
+}
+
+.letter__chapter {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+
+.letter__title {
+  font-family: var(--font-title);
+  font-size: clamp(2.5rem, 6vw, 5.5rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--cream);
+  line-height: 1;
+  margin-bottom: 3.5rem;
+}
+
+.letter__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.letter__line {
+  font-family: var(--font-title);
+  font-size: clamp(1.35rem, 2.8vw, 2rem);
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 1.75;
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.letter__line.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.letter__line--signature {
+  font-family: var(--font-script);
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  color: var(--gold-light);
+  margin-top: 2.5rem;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CHAPTER 7 — CLOSING
+═══════════════════════════════════════════════════════════ */
+.chapter--close {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  min-height: 100vh;
+}
+
+.close__bg {
+  position: absolute;
+  inset: 0;
+}
+
+.close__photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  filter: brightness(0.5) saturate(0.65);
+}
+
+.close__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(12,10,14,0.3) 0%,
+    rgba(12,10,14,0.2) 35%,
+    rgba(12,10,14,0.75) 100%
+  );
+}
+
+.close__content {
+  position: relative;
+  z-index: 2;
+}
+
+.close__chapter {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+}
+
+.close__name {
+  font-family: var(--font-title);
+  font-size: clamp(5rem, 15vw, 14rem);
+  font-weight: 300;
+  color: var(--cream);
+  line-height: 0.9;
+  letter-spacing: -0.03em;
+  text-shadow: 0 4px 80px rgba(0,0,0,0.7);
+}
+
+.close__line {
+  font-family: var(--font-title);
+  font-size: clamp(1.5rem, 4vw, 3.5rem);
+  font-style: italic;
+  color: var(--gold-light);
+  margin-top: 1rem;
+  opacity: 0;
+  transition: opacity 1.2s ease 0.4s, transform 1.2s ease 0.4s;
+  transform: translateY(12px);
+}
+
+.close__content.revealed .close__line {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.close__made {
+  font-family: var(--font-script);
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  color: var(--dim);
+  margin-top: 2.5rem;
+  opacity: 0;
+  transition: opacity 1.2s ease 0.8s;
+}
+
+.close__content.revealed .close__made { opacity: 1; }
+
+/* ═══════════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .chapter--editorial { padding: 6rem 2rem 6rem 2rem; }
+  .editorial__grid { height: auto; grid-template-columns: 1fr; grid-template-rows: auto; }
+  .editorial__photo--main { grid-row: auto; }
+  .editorial__photo--top-right, .editorial__photo--bottom-right { grid-column: auto; grid-row: auto; }
+  .editorial__photo { height: 55vw; }
+
+  .throwback__header { padding: 0 2rem; }
+  .throwback__track { padding: 0.5rem 2rem 2rem; }
+  .throwback__card { width: 250px; }
+  .throwback__frame { height: 360px; }
+
+  .chapter--people { padding: 6rem 2rem; }
+  .people__mosaic { grid-template-columns: 1fr 1fr; }
+
+  .look__split { flex-direction: column; }
+  .look__panel { flex: 1 0 50%; }
+  .look__divider { height: 1px; width: 100%; }
+}
+
+@media (max-width: 680px) {
+  .chapter-nav { left: 0.8rem; }
+  .chapter--editorial, .chapter--people, .chapter--throwback { padding: 5rem 1.2rem; }
+  .throwback__header { padding: 0 1.2rem; }
+  .throwback__track { padding: 0.5rem 1.2rem 2rem; }
+  .people__mosaic { grid-template-columns: 1fr; max-width: 360px; }
+  .chapter--letter { padding: 6rem 1.5rem; }
+  .letter__inner { max-width: 100%; }
+  .chapter--look { min-height: auto; }
+
+  /* disable custom cursor on touch */
+  .cursor, .cursor-dot { display: none; }
+}

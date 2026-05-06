@@ -6,216 +6,222 @@
   <title>For Naomi</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600;1,700&family=DM+Sans:wght@300;400&family=Pinyon+Script&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Space+Grotesk:wght@300;400;500&family=Pinyon+Script&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
-  <!-- ─── Custom cursor ─── -->
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-dot" id="cursorDot"></div>
-
-  <!-- ─── Chapter nav dots ─── -->
-  <nav class="chapter-nav" id="chapterNav" aria-label="Chapter navigation">
-    <button class="chapter-nav__dot active" data-chapter="0" aria-label="Chapter 1"></button>
-    <button class="chapter-nav__dot" data-chapter="1" aria-label="Chapter 2"></button>
-    <button class="chapter-nav__dot" data-chapter="2" aria-label="Chapter 3"></button>
-    <button class="chapter-nav__dot" data-chapter="3" aria-label="Chapter 4"></button>
-    <button class="chapter-nav__dot" data-chapter="4" aria-label="Chapter 5"></button>
-    <button class="chapter-nav__dot" data-chapter="5" aria-label="Chapter 6"></button>
-    <button class="chapter-nav__dot" data-chapter="6" aria-label="Chapter 7"></button>
-  </nav>
-
   <!-- ══════════════════════════════════════════════
-       CHAPTER 1 — HERO
+       SECTION 1 — HERO
   ══════════════════════════════════════════════ -->
-  <section class="chapter chapter--hero" id="ch1" data-chapter="0">
-    <div class="hero__bg">
-      <img src="photos/roses.jpg" alt="" class="hero__photo" />
-      <div class="hero__overlay"></div>
+  <section class="s-hero" id="s1">
+    <div class="hero-img-wrap">
+      <img src="photos/roses.jpg" alt="Naomi" class="hero-img" />
     </div>
-    <div class="hero__particles" id="heroParticles"></div>
-    <div class="hero__content">
-      <p class="hero__eyebrow">through abel's eyes</p>
-      <h1 class="hero__name">Naomi</h1>
-      <p class="hero__sub">a story told in light &amp; love</p>
+    <div class="hero-content">
+      <span class="hero-tag">a collection for</span>
+      <h1 class="hero-name">Naomi</h1>
+      <span class="hero-sub">by Abel &mdash; with everything</span>
     </div>
-    <div class="hero__scroll">
-      <span class="hero__scroll-line"></span>
-    </div>
+    <a class="hero-down" href="#s2" aria-label="Scroll down">
+      <span class="hero-down__label">scroll</span>
+      <span class="hero-down__line"></span>
+    </a>
   </section>
 
   <!-- ══════════════════════════════════════════════
-       CHAPTER 2 — "She Walked In"
+       SECTION 2 — FEATURE "She Is"
   ══════════════════════════════════════════════ -->
-  <section class="chapter chapter--editorial" id="ch2" data-chapter="1">
-    <div class="editorial__label" data-reveal>chapter ii</div>
-    <h2 class="editorial__title" data-reveal>She Walked In</h2>
-
-    <div class="editorial__grid">
-      <div class="editorial__photo editorial__photo--main magnetic" data-reveal data-delay="0">
+  <section class="s-feature" id="s2">
+    <div class="feature-text" data-reveal>
+      <p class="label-tag">01 &mdash; she is</p>
+      <h2 class="feature-heading">
+        The kind of<br />
+        <em>beautiful</em><br />
+        you can't look<br />
+        away from.
+      </h2>
+      <p class="feature-body">
+        There's no good explanation for it.<br />
+        She just has something.
+      </p>
+    </div>
+    <div class="feature-photos">
+      <div class="feature-photo feature-photo--a" data-reveal data-delay="80">
         <img src="photos/glam-wavy.jpg" alt="Naomi" />
-        <span class="editorial__caption">effortlessly herself</span>
       </div>
-      <div class="editorial__photo editorial__photo--top-right magnetic" data-reveal data-delay="120">
+      <div class="feature-photo feature-photo--b" data-reveal data-delay="200">
+        <img src="photos/roses.jpg" alt="Naomi" />
+        <span class="feature-photo__badge">always her ♡</span>
+      </div>
+      <div class="feature-photo feature-photo--c" data-reveal data-delay="330">
         <img src="photos/glam-moody.jpg" alt="Naomi" />
-        <span class="editorial__caption">the eyes that say everything</span>
       </div>
-      <div class="editorial__photo editorial__photo--bottom-right magnetic" data-reveal data-delay="240">
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 3 — WIDE STRIP
+  ══════════════════════════════════════════════ -->
+  <section class="s-strip">
+    <div class="strip-inner">
+      <div class="strip-photo" data-reveal data-delay="0">
+        <img src="photos/black-dress.jpg" alt="Naomi" />
+        <p class="strip-cap">dressed &amp; ready</p>
+      </div>
+      <div class="strip-photo" data-reveal data-delay="110">
+        <img src="photos/glam-bed.jpg" alt="Naomi" />
+        <p class="strip-cap">soft &amp; sure</p>
+      </div>
+      <div class="strip-photo" data-reveal data-delay="220">
+        <img src="photos/black-offshoulder.jpg" alt="Naomi" />
+        <p class="strip-cap">effortless</p>
+      </div>
+      <div class="strip-photo" data-reveal data-delay="330">
         <img src="photos/glam-smile.jpg" alt="Naomi" />
-        <span class="editorial__caption">that smile ♡</span>
+        <p class="strip-cap">that smile ♡</p>
       </div>
     </div>
   </section>
 
   <!-- ══════════════════════════════════════════════
-       CHAPTER 3 — "She Was Always This Beautiful"
+       SECTION 4 — THROWBACK "Before I Knew You"
   ══════════════════════════════════════════════ -->
-  <section class="chapter chapter--throwback" id="ch3" data-chapter="2">
-    <div class="throwback__header" data-reveal>
-      <div class="throwback__label">chapter iii</div>
-      <h2 class="throwback__title">She Was Always<br /><em>This Beautiful</em></h2>
-      <p class="throwback__hint">scroll →</p>
+  <section class="s-throwback" id="s4">
+    <div class="throwback-head" data-reveal>
+      <p class="label-tag">02 &mdash; before i knew you</p>
+      <h2 class="throwback-title">She Was Always<br /><em>This Girl.</em></h2>
     </div>
 
-    <div class="throwback__track-wrap">
-      <div class="throwback__track" id="throwbackTrack">
-
-        <article class="throwback__card vintage">
-          <div class="throwback__frame">
-            <img src="photos/baby-infant.jpg" alt="Baby Naomi" />
-          </div>
-          <p class="throwback__cap">from day one ♡</p>
-        </article>
-
-        <article class="throwback__card vintage">
-          <div class="throwback__frame">
-            <img src="photos/baby-toddler.jpg" alt="Toddler Naomi" />
-          </div>
-          <p class="throwback__cap">she had this look even then</p>
-        </article>
-
-        <article class="throwback__card vintage-soft">
-          <div class="throwback__frame">
-            <img src="photos/young-birthday.jpg" alt="Young Naomi at birthday" />
-          </div>
-          <p class="throwback__cap">already the life of the room</p>
-        </article>
-
-        <article class="throwback__card warm">
-          <div class="throwback__frame">
-            <img src="photos/family-sisters.jpg" alt="Naomi with sisters" />
-          </div>
-          <p class="throwback__cap">made from love</p>
-        </article>
-
-        <article class="throwback__card warm">
-          <div class="throwback__frame">
-            <img src="photos/family-portrait.jpg" alt="Family portrait" />
-          </div>
-          <p class="throwback__cap">her roots ♡</p>
-        </article>
-
-        <article class="throwback__card">
-          <div class="throwback__frame">
-            <img src="photos/glam-curly.jpg" alt="Naomi now" />
-          </div>
-          <p class="throwback__cap">and then she became <em>her</em></p>
-        </article>
-
+    <div class="throwback-grid">
+      <div class="tb-item tb-item--big" data-reveal data-delay="0">
+        <img src="photos/baby-infant.jpg" alt="Baby Naomi" />
+        <div class="tb-caption">
+          <span class="tb-year">day one</span>
+          <span class="tb-note">from the very beginning ♡</span>
+        </div>
+      </div>
+      <div class="tb-item" data-reveal data-delay="120">
+        <img src="photos/baby-toddler.jpg" alt="Toddler Naomi" />
+        <div class="tb-caption">
+          <span class="tb-year">little one</span>
+          <span class="tb-note">already had the look</span>
+        </div>
+      </div>
+      <div class="tb-item" data-reveal data-delay="200">
+        <img src="photos/young-birthday.jpg" alt="Young Naomi" />
+        <div class="tb-caption">
+          <span class="tb-year">growing up</span>
+          <span class="tb-note">life of every room</span>
+        </div>
+      </div>
+      <div class="tb-item" data-reveal data-delay="280">
+        <img src="photos/family-sisters.jpg" alt="Naomi with sisters" />
+        <div class="tb-caption">
+          <span class="tb-year">family</span>
+          <span class="tb-note">made from love</span>
+        </div>
+      </div>
+      <div class="tb-item tb-item--wide" data-reveal data-delay="360">
+        <img src="photos/family-portrait.jpg" alt="Family portrait" />
+        <div class="tb-caption">
+          <span class="tb-year">her roots</span>
+          <span class="tb-note">where she comes from ♡</span>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- ══════════════════════════════════════════════
-       CHAPTER 4 — "She Shows Up"
+       SECTION 5 — FULL-WIDTH QUOTE BREAK
   ══════════════════════════════════════════════ -->
-  <section class="chapter chapter--people" id="ch4" data-chapter="3">
-    <div class="people__header" data-reveal>
-      <div class="people__label">chapter iv</div>
-      <h2 class="people__title">She Shows Up</h2>
-      <p class="people__sub">for everyone she loves.</p>
+  <section class="s-quote">
+    <div class="quote-photo-wrap">
+      <img src="photos/glam-curly.jpg" alt="Naomi" class="quote-photo" />
+      <div class="quote-overlay"></div>
+    </div>
+    <blockquote class="quote-text" data-reveal>
+      <span>"</span>she didn't become remarkable.<br />
+      she always was.<span>"</span>
+    </blockquote>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       SECTION 6 — HER PEOPLE "She Shows Up"
+  ══════════════════════════════════════════════ -->
+  <section class="s-people" id="s6">
+    <div class="people-head" data-reveal>
+      <p class="label-tag">03 &mdash; she shows up</p>
+      <h2 class="people-title">For everyone<br /><em>she loves.</em></h2>
     </div>
 
-    <div class="people__mosaic">
-      <div class="people__item" data-reveal data-delay="0">
+    <div class="people-layout">
+      <div class="people-item people-item--tall" data-reveal data-delay="0">
         <img src="photos/with-baby-kiss.jpg" alt="Naomi with baby" />
-        <p class="people__caption">she loves with her whole heart</p>
+        <p class="people-cap">she loves with her whole heart</p>
       </div>
-      <div class="people__item" data-reveal data-delay="100">
-        <img src="photos/with-little-one.jpg" alt="Naomi with little one" />
-        <p class="people__caption">everyone's favourite person</p>
+      <div class="people-col">
+        <div class="people-item" data-reveal data-delay="120">
+          <img src="photos/with-little-one.jpg" alt="Naomi with little one" />
+          <p class="people-cap">everyone's favourite person</p>
+        </div>
+        <div class="people-item" data-reveal data-delay="240">
+          <img src="photos/with-friend.jpg" alt="Naomi with friend" />
+          <p class="people-cap">she brings the energy</p>
+        </div>
       </div>
-      <div class="people__item" data-reveal data-delay="200">
-        <img src="photos/with-friend.jpg" alt="Naomi with friend" />
-        <p class="people__caption">she brings the energy</p>
-      </div>
-      <div class="people__item" data-reveal data-delay="300">
+      <div class="people-item people-item--tall" data-reveal data-delay="360">
         <img src="photos/with-sister.jpg" alt="Naomi with sister" />
-        <p class="people__caption">her person ♡</p>
+        <p class="people-cap">her person ♡</p>
       </div>
     </div>
   </section>
 
   <!-- ══════════════════════════════════════════════
-       CHAPTER 5 — "The Look"
+       SECTION 7 — LETTER "A Letter to Her"
   ══════════════════════════════════════════════ -->
-  <section class="chapter chapter--look" id="ch5" data-chapter="4">
-    <div class="look__split">
-      <div class="look__panel look__panel--left magnetic">
-        <img src="photos/black-dress.jpg" alt="Naomi" class="look__img" />
-        <div class="look__vignette"></div>
+  <section class="s-letter" id="s7">
+    <div class="letter-wrap">
+      <div class="letter-side" data-reveal>
+        <p class="label-tag">04 &mdash; a letter</p>
+        <h2 class="letter-heading">For Her</h2>
+        <div class="letter-rule"></div>
       </div>
-      <div class="look__divider"></div>
-      <div class="look__panel look__panel--right magnetic">
-        <img src="photos/black-offshoulder.jpg" alt="Naomi" class="look__img" />
-        <div class="look__vignette"></div>
-      </div>
-    </div>
-    <div class="look__word" data-reveal>her.</div>
-    <div class="look__label" data-reveal>chapter v</div>
-  </section>
-
-  <!-- ══════════════════════════════════════════════
-       CHAPTER 6 — "A Letter"
-  ══════════════════════════════════════════════ -->
-  <section class="chapter chapter--letter" id="ch6" data-chapter="5">
-    <div class="letter__inner">
-      <div class="letter__rule" data-reveal></div>
-      <p class="letter__chapter" data-reveal>chapter vi</p>
-      <h2 class="letter__title" data-reveal>A Letter</h2>
-      <div class="letter__body" id="letterBody">
-        <p class="letter__line">I didn't go looking for you.</p>
-        <p class="letter__line">I don't think I needed to.</p>
-        <p class="letter__line">You just arrived — and suddenly everything made sense.</p>
-        <p class="letter__line">I've seen you laugh until you forget yourself.</p>
-        <p class="letter__line">I've seen you be someone's whole world.</p>
-        <p class="letter__line">I've seen you soft, and sure, and stunning.</p>
-        <p class="letter__line">And I think about it —</p>
-        <p class="letter__line">how even before I knew you,</p>
-        <p class="letter__line">you were somewhere out there</p>
-        <p class="letter__line">already being this remarkable.</p>
-        <p class="letter__line">You don't need me to tell you how beautiful you are.</p>
-        <p class="letter__line">But I will anyway.</p>
-        <p class="letter__line">Every single day.</p>
-        <p class="letter__line letter__line--signature">— Abel</p>
+      <div class="letter-body" id="letterBody">
+        <p class="l-line">I didn't go looking for you.</p>
+        <p class="l-line">I don't think I needed to.</p>
+        <p class="l-line">You just arrived —</p>
+        <p class="l-line">and suddenly everything made sense.</p>
+        <p class="l-line">I've seen you laugh until you forget yourself.</p>
+        <p class="l-line">I've seen you be someone's whole world.</p>
+        <p class="l-line">I've seen you soft, and sure, and stunning.</p>
+        <p class="l-line">And I think about it —</p>
+        <p class="l-line">how even before I knew you,</p>
+        <p class="l-line">you were out there somewhere,</p>
+        <p class="l-line">already being this remarkable.</p>
+        <p class="l-line">You don't need me to tell you.</p>
+        <p class="l-line">But I will.</p>
+        <p class="l-line">Every single day.</p>
+        <p class="l-line l-line--sig">— Abel</p>
       </div>
     </div>
   </section>
 
   <!-- ══════════════════════════════════════════════
-       CHAPTER 7 — CLOSING
+       SECTION 8 — CLOSING
   ══════════════════════════════════════════════ -->
-  <section class="chapter chapter--close" id="ch7" data-chapter="6">
-    <div class="close__bg">
-      <img src="photos/glam-bed.jpg" alt="Naomi" class="close__photo" />
-      <div class="close__overlay"></div>
+  <section class="s-close" id="s8">
+    <div class="close-inner" data-reveal>
+      <p class="label-tag" style="color:var(--amber)">05 &mdash; always</p>
+      <h2 class="close-name">Naomi.</h2>
+      <p class="close-line">she's everything.</p>
+      <div class="close-rule"></div>
+      <p class="close-made">made by Abel, for her ♡</p>
     </div>
-    <div class="close__content" data-reveal>
-      <p class="close__chapter">chapter vii</p>
-      <h2 class="close__name">Naomi.</h2>
-      <p class="close__line">she's everything.</p>
-      <p class="close__made">made by abel, for her.</p>
+    <div class="close-photos">
+      <img src="photos/glam-smile.jpg" alt="" class="close-photo cp1" data-reveal data-delay="0" />
+      <img src="photos/black-dress.jpg" alt="" class="close-photo cp2" data-reveal data-delay="150" />
+      <img src="photos/with-sister.jpg" alt="" class="close-photo cp3" data-reveal data-delay="300" />
     </div>
   </section>
 
